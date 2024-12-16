@@ -1,6 +1,7 @@
 const User = require("../database/userModel");
 const bcrypt = require("bcryptjs");
 const Contact = require("../database/contactModel");
+const Course = require('../database/courseSchema')
 
 const register = async (req, res) => {
   try {
@@ -73,7 +74,8 @@ const contact = async (req, res) => {
 
 const course = async (req, res) => {
   try {
-    
+    const response = await Course.find()
+    res.status(200).json({response})
   } catch (error) {
     console.log(error);
   }
