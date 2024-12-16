@@ -10,6 +10,25 @@ const userSchema = mongoose.Schema({
     role: { required: true, type: String }
 })
 
+userSchema.methods.generateToken = async()=>{
+    try {
+       return jwt.sign(
+        {
+            isAdmin: this.isAdmin,
+            role: this.role,
+            email: this.email,
+            userId: this._id
+        },
+        process.env.JWT_TOKEN,
+        {
+            expiresIn:'2h'
+        }
+       )
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const User = new mongoose.model("User", userSchema)
 
 module.exports = User
