@@ -22,7 +22,7 @@ const register = async (req, res) => {
       phone,
       role,
     });
-    res.status(200).json({ createUser });
+    res.status(200).json({ createUser , token: await createUser.generateToken(), userId: createUser._id});
   } catch (error) {
     console.log(error);
     res
@@ -44,7 +44,7 @@ const login = async (req, res) => {
     }
     const check_password = await bcrypt.compare(password, userExist.password);
     if (check_password) {
-      res.status(200).json({ msg: `Register successfull` });
+      res.status(200).json({ msg: `Register successfull` , token : await userExist.generateToken(), userId: userExist._id});
     }
     return res.status(409).json({ msg: `Invalid credentials` });
   } catch (error) {
