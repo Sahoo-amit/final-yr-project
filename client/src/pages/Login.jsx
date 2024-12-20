@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { useTokenContext } from '../context/TokenContext'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
     const [user, setUser] = useState({
         email:"",
         password:''
       })
-    
+      const navigate = useNavigate()
       const handleChange =(e)=>{
         let {name, value} = e.target
         setUser({
@@ -25,9 +26,9 @@ const Login = () => {
             body: JSON.stringify(user)
           })
           const result = await response.json()
-          console.log(result)
           if(response.ok){
             storeToken(result.token)
+            navigate('/')
           }
           console.log(response)
         } catch (error) {

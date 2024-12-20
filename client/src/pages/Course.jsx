@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const Course = () => {
   const [course, setCourse] = useState([])
@@ -33,7 +34,7 @@ const Course = () => {
                 <img src={courseImage} alt="courseImage" style={{ width: "200px", height: "200px" }}/>
                 <h1>Course name : {courseName}</h1>
                 <h1>Description : {courseDescription}</h1>
-                <button onClick={showMore}>View Details</button>
+                <button><Link to={`/course/${courseName}`}>View details</Link></button>
               </li>
             )
           })
