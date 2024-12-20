@@ -8,6 +8,14 @@ import Logout from './pages/Logout'
 import Signup from './pages/Signup'
 import Course from './pages/Course'
 import CourseDetails from './pages/CourseDetails'
+import Register from './pages/Register'
+import StudentSignup from './pages/StudentSignup'
+import TeacherSignup from './pages/TeacherSignup'
+import StudentLogin from './pages/StudentLogin'
+import TeacherLogin from './pages/TeacherLogin'
+import AdminLogin from './pages/AdminLogin'
+
+
 
 const App = () => {
   return (
@@ -16,12 +24,16 @@ const App = () => {
         <Header/>
         <Routes>
           <Route path='/' element={<Home/>}/>
-          <Route path='/about' element={<Home/>}/>
+          <Route path='/about' element={<About/>}/>
           <Route path='/contact' element={<Contact/>}/>
           <Route path='/course' element={<Course/>}/>
-          <Route path='/login' element={<Login/>}/>
+          <Route path='/student-login' element={<StudentLogin/>}/>
+          <Route path='/teacher-login' element={<TeacherLogin/>}/>
+          <Route path='/admin-login' element={<AdminLogin/>}/>
+          <Route path='/register' element={<Register/>}/>
           <Route path='/logout' element={<Logout/>}/>
-          <Route path='/signup' element={<Signup/>}/>
+          <Route path='/student-signup' element={<StudentSignup/>}/>
+          <Route path='/teacher-signup' element={<TeacherSignup/>}/>
           <Route path='/course/:id' element={<CourseDetails/>}/>
         </Routes>
       </BrowserRouter>
