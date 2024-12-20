@@ -22,7 +22,7 @@ const register = async (req, res) => {
       phone,
       role,
     });
-    res.status(200).json({ createUser , token: await createUser.generateToken(), userId: createUser._id});
+    res.status(200).json({ msg:`Registration successful` , token: await createUser.generateToken(), userId: createUser._id});
   } catch (error) {
     console.log(error);
     res
@@ -32,21 +32,18 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  ``;
   try {
     const { email, password } = req.body;
-    if (!email || !password) {
-      return res.status(400).json({ msg: `Please fill all fields` });
-    }
     const userExist = await User.findOne({ email });
     if (!userExist) {
       return res.status(409).json({ msg: `User not found` });
     }
     const check_password = await bcrypt.compare(password, userExist.password);
     if (check_password) {
-      res.status(200).json({ msg: `Register successfull` , token : await userExist.generateToken(), userId: userExist._id});
+      res.status(200).json({ msg: `Login successful` , token : await userExist.generateToken(), userId: userExist._id});
+    }else{
+      return res.status(409).json({ msg: `Invalid credentials` });
     }
-    return res.status(409).json({ msg: `Invalid credentials` });
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: `Server Error during login ` });
