@@ -1,14 +1,15 @@
-import { useEffect } from "react"
-import { useTokenContext } from "../context/TokenContext"
-import { Navigate } from "react-router-dom"
+import { useEffect } from "react";
+import { useTokenContext } from "../context/TokenContext";
+import { useNavigate } from "react-router-dom";
 
 const Logout = () => {
-  const {removeToken} = useTokenContext()
-  useEffect(()=>{
-    removeToken()
-  },[])
-  Navigate('/')
-  return null
-}
+  const { removeToken } = useTokenContext();
+  const navigate = useNavigate();
+  useEffect(() => {
+    removeToken();
+    navigate("/login");
+  }, [removeToken, navigate]);
+  return null;
+};
 
-export default Logout
+export default Logout;

@@ -78,4 +78,27 @@ const course = async (req, res) => {
   }
 };
 
-module.exports = { login, register, contact, course };
+const user = async(req,res)=>{
+  try {
+    const userData = req.user
+    const token = req.token
+    res.status(200).json({userData, token})
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const admin = async(req,res)=>{
+  try {
+    const userData = await User.find({}, {password: 0})
+    if(!userData){
+      return res.status(409).json({msg:`User not found`})
+    }else{
+      res.status(200).json({userData})
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+module.exports = { login, register, contact, course, user, admin };

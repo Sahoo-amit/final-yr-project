@@ -8,6 +8,7 @@ import Logout from './pages/Logout'
 import Signup from './pages/Signup'
 import Course from './pages/Course'
 import CourseDetails from './pages/CourseDetails'
+import UserData from './components/admin/UserData'
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route path='/logout' element={<Logout/>}/>
           <Route path='/signup' element={<Signup/>}/>
           <Route path='/course/:id' element={<CourseDetails/>}/>
+          <Route path='/admin' element={<UserData/>}/>
         </Routes>
       </BrowserRouter>
     </>

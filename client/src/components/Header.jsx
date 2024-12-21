@@ -1,8 +1,10 @@
 import { NavLink } from 'react-router-dom'
 import { useTokenContext } from '../context/TokenContext'
+import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 
 const Header = () => {
-  const {isLogout} = useTokenContext()
+  const {isLogout, isDark, setIsDark} = useTokenContext()
+  
   return (
     <div>
         <div>
@@ -24,6 +26,9 @@ const Header = () => {
             :
             <NavLink to='/logout'>Logout</NavLink>
           }
+        </div>
+        <div onClick={()=>setIsDark(!isDark)}>
+            { isDark ? <MdDarkMode/> : <MdOutlineLightMode/> }
         </div>
     </div>
   )

@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const router = require('./routes/student.routes')
+const admin_router = require('./routes/admin.routes')
 const connectDB = require('./database/db')
 const cors = require('cors')
 
@@ -13,6 +14,7 @@ const corsOption ={
 app.use(cors(corsOption))
 app.use(express.json())
 app.use('/api',router)
+app.use('/admin',admin_router)
 
 const PORT = 4000
 connectDB().then(()=>{

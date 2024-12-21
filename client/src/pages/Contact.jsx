@@ -1,16 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useTokenContext } from '../context/TokenContext'
 
 const Contact = () => {
   const [contact, setContact] = useState({
     username:"",
     email:"",
+    phone:"",
     message:""
   })
 
   const handleChange =(e)=>{
     let {name, value} = e.target
     setContact({
-      ...Contact, [name]:value
+      ...contact, [name]:value
     })
   }
 
@@ -24,11 +26,28 @@ const Contact = () => {
         },
         body: JSON.stringify(contact)
       })
-      console.log(response)
+      if(response.ok){
+        setContact((prevData)=>({
+            ...prevData,
+            message:""
+        }))
+      }
     } catch (error) {
       console.log(error)
     }
   }
+
+  const {user} = useTokenContext()
+  useEffect(() => {
+    if (user) {
+        setContact({
+            username: user.username || '',
+            email: user.email || '',
+            phone: user.phone || '',
+            message: '',
+        });
+    }
+}, [user]);
 
   return (
     <div>
@@ -43,8 +62,12 @@ const Contact = () => {
           <input type="email" name="email" id="email" required value={contact.email} onChange={handleChange}/>
         </div>
         <div>
+          <label htmlFor="phone">Mobile</label>
+          <input type="number" name="phone" id="phone" readOnly value={contact.phone} onChange={handleChange}/>
+        </div>
+        <div>
           <label htmlFor="message">Message</label>
-          <textarea name="message" id="message" rows="10"/>
+          <textarea name="message" id="message" rows="10" required value={contact.message} onChange={handleChange}/>
         </div>
         <button type="submit">Send</button>
       </form>

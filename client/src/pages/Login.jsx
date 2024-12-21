@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useTokenContext } from '../context/TokenContext'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const [user, setUser] = useState({
@@ -28,6 +29,7 @@ const Login = () => {
           const result = await response.json()
           if(response.ok){
             storeToken(result.token)
+            toast.success(`Login successful`)
             navigate('/')
           }
           console.log(response)

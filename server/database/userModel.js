@@ -10,24 +10,26 @@ const userSchema = mongoose.Schema({
     role: { required: true, type: String }
 })
 
-userSchema.methods.generateToken = async()=>{
+userSchema.methods.generateToken = async function () {
     try {
-       return jwt.sign(
-        {
-            isAdmin: this.isAdmin,
-            role: this.role,
-            email: this.email,
-            userId: this._id
-        },
-        process.env.JWT_TOKEN,
-        {
-            expiresIn:'2h'
-        }
-       )
+        return jwt.sign(
+            {
+                isAdmin: this.isAdmin,
+                role: this.role,
+                email: this.email,
+                userId: this._id,
+            },
+            process.env.JWT_TOKEN,
+            {
+                expiresIn: '2h',
+            }
+        );
     } catch (error) {
-        console.log(error)
+        console.error("Error generating token:", error);
+        throw error;
     }
-}
+};
+
 
 const User = new mongoose.model("User", userSchema)
 

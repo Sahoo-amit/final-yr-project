@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react"
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const CourseDetails = () => {
     const [courseDetails, setCourseDetails] = useState([])
     const params = useParams()
+    const navigate = useNavigate()
 
+    const handlenavigation =()=>{
+        navigate(-1)
+    }
     const loadCourses = async()=>{
         try {
           const response = await fetch(`http://localhost:4000/api/course`,{
@@ -41,7 +45,7 @@ const CourseDetails = () => {
                 <p>Duration : {courseDuration}</p>
                 <p>Student enrolled: {courseEnrolledStudents}</p>
                 <p>Created on : {courseCreatedAt}</p>
-                <button onClick={()=>handle}></button>
+                <button onClick={()=>handlenavigation()}>Go back</button>
               </li>
             )
           })
