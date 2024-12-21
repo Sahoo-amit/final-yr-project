@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useTokenContext } from '../context/TokenContext'
+import { toast } from 'react-toastify'
 
 const Contact = () => {
   const [contact, setContact] = useState({
@@ -31,6 +32,7 @@ const Contact = () => {
             ...prevData,
             message:""
         }))
+        toast.success(`Message sent successfully`)
       }
     } catch (error) {
       console.log(error)
@@ -55,11 +57,11 @@ const Contact = () => {
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="username">Enter Name</label>
-          <input type="text" name="username" id="username" required value={contact.username} onChange={handleChange}/>
+          <input type="text" name="username" id="username" readOnly value={contact.username} onChange={handleChange}/>
         </div>
         <div>
           <label htmlFor="email">Email</label>
-          <input type="email" name="email" id="email" required value={contact.email} onChange={handleChange}/>
+          <input type="email" name="email" id="email" readOnly value={contact.email} onChange={handleChange}/>
         </div>
         <div>
           <label htmlFor="phone">Mobile</label>

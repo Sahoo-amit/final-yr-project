@@ -32,7 +32,6 @@ const Login = () => {
             toast.success(`Login successful`)
             navigate('/')
           }
-          console.log(response)
         } catch (error) {
           console.log(error)
         }

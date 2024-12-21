@@ -9,14 +9,9 @@ import Signup from './pages/Signup'
 import Course from './pages/Course'
 import CourseDetails from './pages/CourseDetails'
 import UserData from './components/admin/UserData'
-import Register from './pages/Register'
-import StudentSignup from './pages/StudentSignup'
-import TeacherSignup from './pages/TeacherSignup'
-import StudentLogin from './pages/StudentLogin'
-import TeacherLogin from './pages/TeacherLogin'
-import AdminLogin from './pages/AdminLogin'
-
-
+import AdminLayout from './components/admin/AdminLayout'
+import ContactDetails from './components/admin/ContactDetails'
+import UpdateData from './components/admin/UpdateData'
 
 const App = () => {
   return (
@@ -28,15 +23,15 @@ const App = () => {
           <Route path='/about' element={<About/>}/>
           <Route path='/contact' element={<Contact/>}/>
           <Route path='/course' element={<Course/>}/>
-          <Route path='/student-login' element={<StudentLogin/>}/>
-          <Route path='/teacher-login' element={<TeacherLogin/>}/>
-          <Route path='/admin-login' element={<AdminLogin/>}/>
-          <Route path='/register' element={<Register/>}/>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/signup' element={<Signup/>}/>
           <Route path='/logout' element={<Logout/>}/>
-          <Route path='/student-signup' element={<StudentSignup/>}/>
-          <Route path='/teacher-signup' element={<TeacherSignup/>}/>
           <Route path='/course/:id' element={<CourseDetails/>}/>
-          <Route path='/admin' element={<UserData/>}/>
+          <Route path='/admin' element={<AdminLayout/>}>
+              <Route path='userdata' element={<UserData/>}/>
+              <Route path='contactdetails' element={<ContactDetails/>}/>
+              <Route path='userdata/update/:id' element={<UpdateData/>}/>
+          </Route>
         </Routes>
       </BrowserRouter>
     </>

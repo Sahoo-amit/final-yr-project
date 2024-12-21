@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTokenContext } from "../../context/TokenContext";
 import { toast } from 'react-toastify';
+import { Link } from "react-router-dom";
 
 const UserData = () => {
   const [userData, setUserData] = useState([])
@@ -28,7 +29,7 @@ const UserData = () => {
   const removeUser =async(id)=>{
       try {
           const response = await fetch(`http://localhost:4000/admin/user/delete/${id}`,{
-              method:"DELeTE",
+              method:"DELETE",
               headers:{
                "Authorization": authorization 
             }
@@ -73,7 +74,7 @@ useEffect(()=>{
                         <td>{phone}</td>
                         <td>{isAdmin? "Yes":"No"}</td>
                         <td>{role}</td>
-                        <td>Edit</td>
+                        <td><button><Link to={`/admin/userdata/update/${_id}`}>Edit</Link></button></td>
                         <td><button onClick={()=>removeUser(_id)}>Remove</button></td>
                     </tr>
                 )

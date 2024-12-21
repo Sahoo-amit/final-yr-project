@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useTokenContext } from "../context/TokenContext";
 
 const Signup = () => {
   const [user, setUser] = useState({
@@ -6,17 +9,19 @@ const Signup = () => {
     phone: "",
     email: "",
     password: "",
-    role:""
+    role: "student", // Default role
   });
 
+  const navigate = useNavigate()
   const handleChange = (e) => {
-    let { name, value } = e.target;
+    const { name, value } = e.target;
     setUser({
       ...user,
       [name]: value,
     });
   };
 
+  const {storeToken} = useTokenContext()
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -25,18 +30,41 @@ const Signup = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(user),
+        body: JSON.stringify(user)
       });
-      console.log(response);
+      if (response.ok) {
+        const result = await response.json()
+        storeToken(result.token)
+        toast.success(`Register successful`)
+        navigate('/')
+      } else {
+        toast.error("Registration failed");
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error:", error);
     }
   };
+
   return (
     <div>
+      <h1>Signup</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username">Enter name</label>
+          <label htmlFor="role">Select Role</label>
+          <select
+            name="role"
+            id="role"
+            value={user.role}
+            onChange={handleChange}
+            required
+          >
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div>
+          <label htmlFor="username">Enter Name</label>
           <input
             type="text"
             name="username"
@@ -69,10 +97,6 @@ const Signup = () => {
           />
         </div>
         <div>
-          <label htmlFor="role">Role</label>
-          <input type="text" name="role" id="role" required value={user.role} onChange={handleChange}/>
-        </div>
-        <div>
           <label htmlFor="password">Password</label>
           <input
             type="password"
@@ -83,7 +107,7 @@ const Signup = () => {
             onChange={handleChange}
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Register</button>
       </form>
     </div>
   );

@@ -3,8 +3,8 @@ import { useTokenContext } from '../context/TokenContext'
 import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 
 const Header = () => {
-  const {isLogout, isDark, setIsDark} = useTokenContext()
-  
+  const {isLogout, isDark, setIsDark, user} = useTokenContext()
+
   return (
     <div>
         <div>
@@ -26,6 +26,9 @@ const Header = () => {
             :
             <NavLink to='/logout'>Logout</NavLink>
           }
+        </div>
+        <div>
+          {user && user.isAdmin ? <NavLink to='/admin'>Admin</NavLink> : ""}
         </div>
         <div onClick={()=>setIsDark(!isDark)}>
             { isDark ? <MdDarkMode/> : <MdOutlineLightMode/> }

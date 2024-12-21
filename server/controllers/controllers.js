@@ -9,9 +9,15 @@ const register = async (req, res) => {
     if (!username || !email || !password || !phone || !role) {
       return res.status(400).json({ msg: `Please fill all fields` });
     }
+
+    const validRoles = ["student", "teacher", "admin"];
+    if (!validRoles.includes(role)) {
+      return res.status(400).json({ msg: `Invalid role selected` });
+    }
+
     const userExist = await User.findOne({ email });
     if (userExist) {
-      return res.status(409).json({ msg: `User already exist` });
+      return res.status(409).json({ msg: `User already exists` });
     }
     const salt = await bcrypt.genSalt(10);
     const hash_password = await bcrypt.hash(password, salt);
@@ -21,15 +27,19 @@ const register = async (req, res) => {
       password: hash_password,
       phone,
       role,
+      isAdmin: role === "admin",
     });
-    res.status(200).json({ msg:`Registration successful` , token: await createUser.generateToken(), userId: createUser._id});
+    res.status(201).json({
+      msg: `Registration successful`,
+      token: await createUser.generateToken(),
+      userId: createUser._id,
+    });
   } catch (error) {
-    console.log(error);
-    res
-      .status(500)
-      .json({ msg: `Server Error during registration: ${error.message}` });
+    console.error(`Error during registration:`, error);
+    res.status(500).json({ msg: `Server error during registration: ${error.message}` });
   }
 };
+
 
 const login = async (req, res) => {
   try {
@@ -116,4 +126,50 @@ const deleteUser = async(req, res)=>{
   }
 }
 
-module.exports = { login, register, contact, course, user, admin, deleteUser };
+const singleUser = async(req,res)=>{
+  try {
+      const id = req.params.id
+      const data = await User.findOne({_id:id}, {password: 0})
+      res.status(200).json(data)
+  } catch (error) {
+      console.log(error)
+  }
+}
+
+const updateUser = async(req,res)=>{
+  try {
+    const id = req.params.id
+    const result = await User.updateOne({_id:id})
+    res.json({result})
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const contactDetails = async(req,res)=>{
+  try {
+    const details = await Contact.find({})
+    if(details){
+      res.status(200).json(details)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const deleteContact = async(req,res)=>{
+  try {
+    const id = req.params.id
+    const result = await Contact.deleteOne({_id:id})
+    if(result){
+      res.status(200).json({msg:`Delete successful`})
+    }else{
+      res.status(409).json({msg:`Delete failed`})
+      return
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+module.exports = { login, register, contact, course, user, admin, deleteUser, updateUser, singleUser, contactDetails, deleteContact };

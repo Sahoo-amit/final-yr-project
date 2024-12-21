@@ -1,8 +1,11 @@
-import React from 'react'
+import { useTokenContext } from "../context/TokenContext"
 
 const About = () => {
+  const {user} = useTokenContext()
   return (
-    <div>About</div>
+    <div>
+      <h1>Hello, {user ? user.username: ""}</h1>
+    </div>
   )
 }
 
