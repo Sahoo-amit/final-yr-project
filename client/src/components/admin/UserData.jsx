@@ -24,10 +24,28 @@ const UserData = () => {
         console.log(error)
     }
   }
+  
+  const removeUser =async(id)=>{
+      try {
+          const response = await fetch(`http://localhost:4000/admin/user/delete/${id}`,{
+              method:"DELeTE",
+              headers:{
+               "Authorization": authorization 
+            }
+        })
+        if(response.ok){
+            toast.success(`User removed successfully`)
+        }else{
+            toast.error(`Failed to remove user.`)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
 
-  useEffect(()=>{
-    getUserData()
-  },[])
+useEffect(()=>{
+  getUserData()
+},[removeUser, getUserData])
 
   return (
     <div>
@@ -56,7 +74,7 @@ const UserData = () => {
                         <td>{isAdmin? "Yes":"No"}</td>
                         <td>{role}</td>
                         <td>Edit</td>
-                        <td>Update</td>
+                        <td><button onClick={()=>removeUser(_id)}>Remove</button></td>
                     </tr>
                 )
             })

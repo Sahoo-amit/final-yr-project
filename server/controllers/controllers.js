@@ -101,4 +101,19 @@ const admin = async(req,res)=>{
   }
 }
 
-module.exports = { login, register, contact, course, user, admin };
+const deleteUser = async(req, res)=>{
+  try {
+    const id = req.params.id
+    const result = await User.deleteOne({_id: id})
+    if(result){
+      res.status(200).json({msg:`User deleted successfully`})
+    }else{
+      res.status(409).json({msg: `Failed to delete`})
+      return
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+module.exports = { login, register, contact, course, user, admin, deleteUser };
