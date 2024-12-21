@@ -8,9 +8,7 @@ import Logout from './pages/Logout'
 import Signup from './pages/Signup'
 import Course from './pages/Course'
 import CourseDetails from './pages/CourseDetails'
-<<<<<<< HEAD
 import UserData from './components/admin/UserData'
-=======
 import Register from './pages/Register'
 import StudentSignup from './pages/StudentSignup'
 import TeacherSignup from './pages/TeacherSignup'
@@ -19,7 +17,6 @@ import TeacherLogin from './pages/TeacherLogin'
 import AdminLogin from './pages/AdminLogin'
 
 
->>>>>>> a595d30cf05a6b0b1d61a8b40783e2c17f905b41
 
 const App = () => {
   return (
