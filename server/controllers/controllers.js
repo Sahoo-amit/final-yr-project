@@ -1,7 +1,8 @@
 const User = require("../database/userModel");
 const bcrypt = require("bcryptjs");
 const Contact = require("../database/contactModel");
-const Course = require('../database/courseSchema')
+const Course = require('../database/courseSchema');
+const Question = require("../database/Question");
 
 const register = async (req, res) => {
   try {
@@ -88,6 +89,16 @@ const course = async (req, res) => {
   }
 };
 
+const courseDetails = async (req, res) => {
+  try {
+    const id = req.params.id
+    const response = await Course.findOne({_id:id})
+    res.status(200).json({response})
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const user = async(req,res)=>{
   try {
     const userData = req.user
@@ -139,7 +150,8 @@ const singleUser = async(req,res)=>{
 const updateUser = async(req,res)=>{
   try {
     const id = req.params.id
-    const result = await User.updateOne({_id:id})
+    const updateData = req.body
+    const result = await User.updateOne({_id:id}, {$set:updateData})
     res.json({result})
   } catch (error) {
     console.log(error)
@@ -172,4 +184,17 @@ const deleteContact = async(req,res)=>{
   }
 }
 
-module.exports = { login, register, contact, course, user, admin, deleteUser, updateUser, singleUser, contactDetails, deleteContact };
+const getQuestionsByLanguage = async (req, res) => {
+  try {
+    const id = req.params.id
+    const questions = await Question.find({ languageId:id });
+    if (!questions.length) {
+      return res.status(409).json({ message: 'No questions found for this language.' });
+    }
+    res.status(200).json(questions);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching questions', error: error.message });
+  }
+};
+
+module.exports = { login, register, contact, course, courseDetails, user, admin, deleteUser, updateUser, singleUser, contactDetails, deleteContact, getQuestionsByLanguage };

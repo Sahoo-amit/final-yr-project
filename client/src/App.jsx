@@ -12,10 +12,13 @@ import UserData from './components/admin/UserData'
 import AdminLayout from './components/admin/AdminLayout'
 import ContactDetails from './components/admin/ContactDetails'
 import UpdateData from './components/admin/UpdateData'
+import Placement from './pages/Placement'
+import { useTokenContext } from './context/TokenContext'
 
 const App = () => {
+  const {isDark} = useTokenContext()
   return (
-    <>
+    <div className={`${isDark ? "light-theme" : "dark-theme"}`}>
       <BrowserRouter>
         <Header/>
         <Routes>
@@ -26,6 +29,8 @@ const App = () => {
           <Route path='/login' element={<Login/>}/>
           <Route path='/signup' element={<Signup/>}/>
           <Route path='/logout' element={<Logout/>}/>
+         
+          <Route path='/placement' element={<Placement/>}/>
           <Route path='/course/:id' element={<CourseDetails/>}/>
           <Route path='/admin' element={<AdminLayout/>}>
               <Route path='userdata' element={<UserData/>}/>
@@ -34,7 +39,7 @@ const App = () => {
           </Route>
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   )
 }
 

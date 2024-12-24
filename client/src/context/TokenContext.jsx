@@ -6,7 +6,6 @@ export const TokenContextProvider =({children})=>{
     const [token, setToken] = useState(localStorage.getItem("token"))
     const [user, setUser] = useState(null)
     const authorization = `Bearer ${token}`
-    const [isDark, setIsDark] = useState(false)
 
     const storeToken = (token)=>{
         localStorage.setItem("token", token)
@@ -45,7 +44,7 @@ export const TokenContextProvider =({children})=>{
         userAuthentication()
     },[token])
     return (
-        <TokenContext.Provider value={{isLogout, storeToken, removeToken, user, authorization, isDark, setIsDark }}>
+        <TokenContext.Provider value={{isLogout, storeToken, removeToken, user, authorization}}>
             {children}
         </TokenContext.Provider>
     )

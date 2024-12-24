@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useTokenContext } from "../../context/TokenContext";
 import { toast } from "react-toastify";
 
@@ -10,7 +10,7 @@ const UpdateData = () => {
     phone: "",
     role: "",
   });
-
+  const navigate = useNavigate()
   const params = useParams();
   const { authorization } = useTokenContext();
 
@@ -46,10 +46,11 @@ const UpdateData = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
-        }
-      );
+        });
+      console.log(response)
       if (response.ok) {
         toast.success(`User updated successfully`);
+        navigate('/admin/userdata')
       } else {
         toast.error(`Failed to update user.`);
       }
@@ -60,7 +61,7 @@ const UpdateData = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser((prevUser) => ({
+    setData((prevUser) => ({
       ...prevUser,
       [name]: value,
     }));

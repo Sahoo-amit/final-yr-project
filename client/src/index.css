@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.center{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.light-theme{
+    color: black;
+    background-color: white;
+}
+.dark-theme{
+    color: white;
+    background-color: black;
+}
